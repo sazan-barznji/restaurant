@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
 use App\Models\Restaurant;
 use Illuminate\Http\Request;
 
-class RestaurantController extends Controller
+class RestaurantController extends BaseController
 {
 
     public function index()
