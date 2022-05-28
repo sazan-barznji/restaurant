@@ -31,9 +31,6 @@ class MealController extends BaseController
                 'cate_id'=>'required'
            ]);
 
-    // $photo = $request->photo;
-    // $newPhoto = time(). '.' .$photo->getClientOriginalName();
-    // $photo->move('uploads/meals',$newPhoto);
 
     $fileName = time().$request->file('photo')->getClientOriginalName();
     $path = $request->file('photo')->storeAs('images', $fileName, 'public'); 
@@ -44,15 +41,6 @@ class MealController extends BaseController
     return $this->sendError('Please validate error' ,$validator->errors() );
     }
     $meals = Meal::create($input);
-    //  $meals = Meal::create([
-    //     'photo'=>'uploads/meals/'.$newPhoto,
-    //     'title'=>$request-> title,
-    //     'ingr'=>$request->ingr,
-    //     'price'=>$request-> price,
-    //     'time'=>$request-> time,
-    //     'rest_id'=>$request->rest_id ,
-    //     'cate_id'=>$request-> cate_id
-    //  ]);
 
     return $this->sendResponse(new MealResource($meals) ,'Product created successfully' );
           
