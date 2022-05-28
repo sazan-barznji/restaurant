@@ -21,9 +21,7 @@ class MealController extends BaseController
     public function store(Request $request)
     {
         $input = $request->all();
-
-        $validator = Validator::make($input , [
-            
+        $validator = Validator::make($input , [         
                 'photo'=>'required|image',
                 'title'=>'required',
                 'ingr'=>'required',
@@ -31,19 +29,32 @@ class MealController extends BaseController
                 'time'=>'required',
                 'rest_id'=>'required',
                 'cate_id'=>'required'
+           ]);
 
-           ]  );
+    // $photo = $request->photo;
+    // $newPhoto = time(). '.' .$photo->getClientOriginalName();
+    // $photo->move('uploads/meals',$newPhoto);
 
-        // $photo = $request->photo;
-        // $newphoto = time().$photo->getClientOriginalName();
-        // $photo->move('uploads/meals/',$newphoto);
-        $photo= $request->file('photo')->store('uploads/meals/');
+    $fileName = time().$request->file('photo')->getClientOriginalName();
+    $path = $request->file('photo')->storeAs('images', $fileName, 'public'); 
+    $input["photo"] = '/storage/'.$path;
+    
 
-        if ($validator->fails()) {
-        return $this->sendError('Please validate error' ,$validator->errors() );
-        }
-        $meals = Meal::create($input);
-        return $this->sendResponse(new MealResource($meals) ,'Product created successfully' );
+    if ($validator->fails()) {
+    return $this->sendError('Please validate error' ,$validator->errors() );
+    }
+    $meals = Meal::create($input);
+    //  $meals = Meal::create([
+    //     'photo'=>'uploads/meals/'.$newPhoto,
+    //     'title'=>$request-> title,
+    //     'ingr'=>$request->ingr,
+    //     'price'=>$request-> price,
+    //     'time'=>$request-> time,
+    //     'rest_id'=>$request->rest_id ,
+    //     'cate_id'=>$request-> cate_id
+    //  ]);
+
+    return $this->sendResponse(new MealResource($meals) ,'Product created successfully' );
           
     }
 
