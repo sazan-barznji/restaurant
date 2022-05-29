@@ -15,12 +15,15 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('register', 'App\Http\Controllers\API\RegisterController@register');
 Route::post('login', 'App\Http\Controllers\API\RegisterController@login');
 
-
-Route::middleware(['auth:api'])->group(function () {
-
     Route::apiResource('discount',DiscountController::class);
     Route::apiResource('cate',CategoryController::class);
     Route::apiResource('meal',MealController::class);
     Route::apiResource('order',OrderController::class);
+// Route::middleware(['auth:api'])->group(function () {
 
-});
+//     // Route::apiResource('discount',DiscountController::class);
+//     // Route::apiResource('cate',CategoryController::class);
+//     // Route::apiResource('meal',MealController::class);
+//     // Route::apiResource('order',OrderController::class);
+
+// });
