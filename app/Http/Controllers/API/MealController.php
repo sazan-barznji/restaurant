@@ -22,7 +22,7 @@ class MealController extends BaseController
     {
         $input = $request->all();
         $validator = Validator::make($input , [         
-                'photo'=>'required|image',
+                'photo'=>'required|image|mimes:jpeg,png,jpg,gif,svg',
                 'title'=>'required',
                 'ingr'=>'required',
                 'price'=>'required',
@@ -31,12 +31,13 @@ class MealController extends BaseController
                 'cate_id'=>'required'
            ]);
 
-
-    $fileName = time().$request->file('photo')->getClientOriginalName();
-    $path = $request->file('photo')->storeAs('images', $fileName, 'public'); 
-    $input["photo"] = '/storage/'.$path;
+    // $fileName = time().$request->file('photo')->getClientOriginalName();
+    // $path = $request->file('photo')->storeAs('images', $fileName, 'public'); 
+    // $input["photo"] = '/storage/'.$path;
+    $photo = request()->file('photo');
+    $photoName = $photo->getClientOriginalName();
+    $photoName = time().'_'.$photoName;
     
-
     if ($validator->fails()) {
     return $this->sendError('Please validate error' ,$validator->errors() );
     }
