@@ -14,8 +14,9 @@ class MealController extends BaseController
     public function index()
     {
         $meals= Meal::all();
-        return $this->sendResponse(MealResource::collection($meals),
-          'All products sent'); 
+        // return $this->sendResponse(MealResource::collection($meals),
+        //   'All products sent'); 
+          return Meal::with('cate')->latest()->paginate(10);
     }
     
     public function store(Request $request)

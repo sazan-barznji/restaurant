@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Meal extends Model
 {
@@ -22,9 +23,10 @@ class Meal extends Model
         return $this->belongsTo(Restaurant::class, 'rest_id');
     }
    
-    public function user(): BelongsTo
+    public function cate(): BelongsTo
     {
-        return $this->belongsTo(Category::class, 'cate_id');
+        // return $this->belongsTo('App\Models\Category');
+        return $this->belongsTo(Category::class, 'cate_id','id');
     }
 
     public function orders(): HasMany
