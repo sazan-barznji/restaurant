@@ -31,12 +31,12 @@ class MealController extends BaseController
                 'cate_id'=>'required'
            ]);
 
-    // $fileName = time().$request->file('photo')->getClientOriginalName();
-    // $path = $request->file('photo')->storeAs('images', $fileName, 'public'); 
-    // $input["photo"] = '/storage/'.$path;
-    $photo = request()->file('photo');
-    $photoName = $photo->getClientOriginalName();
-    $photoName = time().'_'.$photoName;
+    $fileName = time().$request->file('photo')->getClientOriginalName();
+    $path = $request->file('photo')->storeAs('images', $fileName, 'public'); 
+    $input["photo"] = 'storage/'.$path;
+    // $photo = request()->file('photo');
+    // $photoName = $photo->getClientOriginalName();
+    // $photoName = time().'_'.$photoName;
     
     if ($validator->fails()) {
     return $this->sendError('Please validate error' ,$validator->errors() );
