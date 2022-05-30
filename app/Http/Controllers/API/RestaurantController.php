@@ -2,76 +2,72 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Models\Restaurant;
 use Illuminate\Http\Request;
+use App\Models\Restaurant;
+use Validator;
+use App\Http\Resources\Restaurant as RestaurantResource;
+use App\Http\Controllers\API\BaseController as BaseController;
 
 class RestaurantController extends BaseController
 {
-
     public function index()
     {
         $rests= Restaurant::all();
-        return view('rests.index', compact('rests'));    
+        return $this->sendResponse(RestaurantResource::collection($rests),
+          'All products sent'); 
     }
-
-  
-    public function create()
-    {
-        return view('rests.create');
-    }
-
     
     public function store(Request $request)
     {
-        $this->validate($request,[
-            'res_name'=>'required'
-            
-        ]);
+        $input = $request->all();
 
-        $rests = Restaurant::create([
-            'res_name'=> $request->res_name,
-        ]);
-        return redirect()->back();
+        $validator = Validator::make($input , [
+            'name'=>'required',
+           ]  );
+
+        if ($validator->fails()) {
+        return $this->sendError('Please validate error' ,$validator->errors() );
+        }
+        $rests = Restaurant::create($input);
+        return $this->sendResponse(new RestaurantResource($rests) ,'Product created successfully' );
+          
     }
 
  
-    public function show(Restaurant $rests)
+    public function show($id)
     {
-        return view('rests.show')->with('rests',$rests);
-    }
+        $rests = Restaurant::find($id);
+        if ( is_null($rests) ) {
+            return $this->sendError('Product not found'  );
+        }
+        return $this->sendResponse(new RestaurantResource($rests) ,'Product found successfully' );
 
- 
-    public function edit($id)
-    {
-        $rests= Restaurant::find($id);
-        return view('rests.edit')->with('rests',$rests);
-        
-    }
-
+    } 
    
-    public function update(Request $request, $id)
+    public function update(Request $request, Restaurant $rests,$id)
     {
-
         $rests=Restaurant ::find($id);
-        $this->validate($request,[
-    
-            'res_name'=>'required',
-        ]);
-        $rests->res_name=$request->res_name;
+        $input = $request->all();
+        $validator = Validator::make($input , [
+            'name'=>'required'
+        ]  );
+
+        if ($validator->fails()) {
+         return $this->sendError('Please validate error' ,$validator->errors() );
+           }
+        $rests->name = $input['name'];
         $rests->save();
-
-        return redirect()->back();
+        return $this->sendResponse(new RestaurantResource($rests) ,'Product updated successfully' );
     }
 
-
-    public function destroy( $id)
+    public function destroy(  Restaurant $rests,$id)
     {
-    
-    if(Restaurant::destroy($id)) {
-        return redirect('rests/')->with('success', 'successfully deleted!');
-      } else {
-        return redirect('rests/')->with('error', 'Please try again!');
-      }
-
+        $rests->destroy($id);
+        return  response()->json([
+            'status'=> true,
+            'message' =>'success'
+        ],200);
     }
+
+
 }

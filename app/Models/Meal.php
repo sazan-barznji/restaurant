@@ -9,7 +9,7 @@ class Meal extends Model
 {
     use HasFactory;
     
-    protected $fillable=['photo','title','price', 'ingr','time','rest_id','cate_id'];
+    protected $fillable=['photo','title','price', 'ingr','quantity','time','rest_id','cate_id'];
 
     //to give full path of the photo
     public function getFeatureAttribute($photo)

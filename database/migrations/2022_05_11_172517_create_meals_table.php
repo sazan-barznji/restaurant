@@ -20,6 +20,7 @@ return new class extends Migration
              $table->string('title');
              $table->decimal('price');
              $table->longText('ingr');
+             $table->integer('quantity'); //new
              $table->integer('time')->default('0');
              $table->Integer('rest_id')->nullable()->unsigned();
              $table->Integer('cate_id')->unsigned(); 

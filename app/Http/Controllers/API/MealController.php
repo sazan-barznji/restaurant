@@ -27,6 +27,7 @@ class MealController extends BaseController
                 'ingr'=>'required',
                 'price'=>'required',
                 'time'=>'required',
+                'quantity'=>'required',
                 'rest_id'=>'required',
                 'cate_id'=>'required'
            ]);
@@ -37,6 +38,8 @@ class MealController extends BaseController
     // $photo = request()->file('photo');
     // $photoName = $photo->getClientOriginalName();
     // $photoName = time().'_'.$photoName;
+
+
     
     if ($validator->fails()) {
     return $this->sendError('Please validate error' ,$validator->errors() );
@@ -46,8 +49,7 @@ class MealController extends BaseController
     return $this->sendResponse(new MealResource($meals) ,'Product created successfully' );
           
     }
-
- 
+   
     public function show($id)
     {
         $meals = Meal::find($id);

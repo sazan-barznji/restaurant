@@ -43,13 +43,13 @@ return [
             'visibility' => 'public',
             'throw' => false,
         ],
-          'meals' => [
-            'driver' => 'local',
-            'root' => storage_path('public/uploads/meals'),
-            'url' => env('APP_URL').'/public',
-            'visibility' => 'public',
-            'throw' => false,
-        ],
+        //   'meals' => [
+        //     'driver' => 'local',
+        //     'root' => storage_path('public/uploads/meals'),
+        //     'url' => env('APP_URL').'/public',
+        //     'visibility' => 'public',
+        //     'throw' => false,
+        // ],
 
         's3' => [
             'driver' => 's3',
