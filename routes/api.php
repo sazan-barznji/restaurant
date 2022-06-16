@@ -22,6 +22,8 @@ Route::post('login', 'App\Http\Controllers\API\RegisterController@login');
     Route::apiResource('order',OrderController::class);
     Route::apiResource('rest',RestaurantController::class);
     // Route::get('meal', 'App\Http\Controllers\API\MealController@image');
+
+    
 // Route::middleware(['auth:api'])->group(function () {
 
 //     // Route::apiResource('discount',DiscountController::class);
